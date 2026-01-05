@@ -1,0 +1,1 @@
+../PanCons/computeScores.py
