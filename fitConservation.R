@@ -1,1 +1,37 @@
-../PanCons/fitConservation.R
+library(fitdistrplus)
+
+input_file_name <- "/Scratch/mazytnicki/PanCons/Results/Arabidopsis_thaliana/pancons_athaliana_all.bed"
+col_names = c("chr", "start", "end", "id", "value1", "value2", "value3", "value4", "value5", "value6", "value7", "conservation")
+input <- read.table(input_file_name, col.names = col_names)
+
+f.def   <- fitdist(input$conservation, "beta")
+f.QME1  <- fitdist(input$conservation, "beta", method = "qme", probs = c(1/10, 1/3))
+f.QME2  <- fitdist(input$conservation, "beta", method = "qme", probs = c(1/3, 2/3))
+f.QME3  <- fitdist(input$conservation, "beta", method = "qme", probs = c(2/3, 9/10))
+f.ADL   <- fitdist(input$conservation, "beta", method = "mge", gof = "ADL")
+f.ADR   <- fitdist(input$conservation, "beta", method = "mge", gof = "ADR")
+f.AD2   <- fitdist(input$conservation, "beta", method = "mge", gof = "AD2")
+fits    <- list(f.def, f.QME1, f.QME2, f.QME3, f.ADL, f.ADR, f.AD2)
+legends <- c("default", "QME 1/10 - 1/3", "QME 1/3 - 2/3", "QME 2/3 - 9/10", "ADL", "ADR", "AD2")
+
+png("fits_beta.png", width = 20, height = 15, unit = "cm", res = 150)
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+denscomp(fits, legendtext = legends, ylim = c(0, 4))
+qqcomp(  fits, legendtext = legends)
+cdfcomp( fits, legendtext = legends)
+ppcomp(  fits, legendtext = legends)
+dev.off()
+
+cons_log <- - log(input$conservation)
+fg      <- fitdist(cons_log, "gamma")
+fw      <- fitdist(cons_log, "weibull", start = list(shape = 0.5, scale = 1))
+fits    <- list(fg, fw)
+legends <- c("gamma", "Weibull")
+
+png("fits_log.png", width = 20, height = 15, unit = "cm", res = 150)
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+denscomp(fits, legendtext = legends, ylim = c(0, 4))
+qqcomp(  fits, legendtext = legends, xlim = c(0, 10))
+cdfcomp( fits, legendtext = legends)
+ppcomp(  fits, legendtext = legends)
+dev.off()
