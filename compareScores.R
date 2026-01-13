@@ -8,6 +8,7 @@ p <- purrr::map_dfr(inputFileNames, readr::read_tsv, col_names = c("score"), col
   dplyr::mutate(type = factor(inputFileNames[as.numeric(type)])) |>
   dplyr::mutate(type = stringr::str_split_i(type, "/", -1)) |>
   dplyr::mutate(type = stringr::str_split_i(type, "_", -2)) |>
+  dplyr::mutate(type = stringr::str_replace(type, "\\.", " ")) |>
   ggplot2::ggplot(ggplot2::aes(x = score, colour = type)) +
   ggplot2::stat_ecdf(geom = "step", linetype = "dashed") +
   ggplot2::xlab("") +
