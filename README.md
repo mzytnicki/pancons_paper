@@ -4,7 +4,12 @@
 
 ### Pangenome graphs
 
-*Arabidopsis thaliana* genomes were downloaded using data from [NCBI](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1033522/), and the pangenome graph was built using [Pan1c](https://forge.inrae.fr/genotoul-bioinfo/Pan1c/pan1c).
+*Arabidopsis thaliana* genomes were downloaded using data from [NCBI](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1033522/), and the [pangenome graph](
+https://web-genobioinfo.toulouse.inrae.fr/briefwp3/Pan1c/pan1c_view/?id=46_Arabidopsis_col_0.Pan1c_View) was built using [Pan1c](https://forge.inrae.fr/genotoul-bioinfo/Pan1c/pan1c).
+
+```
+wget https://web-genobioinfo.toulouse.inrae.fr/briefwp3/Pan1c/pan1c_view/project/46_Arabidopsis_col_0.Pan1c_View/data/Pan1c.MC.46_Arabidopsis_col_0.gfa.gz
+```
 
 Human pangenome graph were downloaded with the following code
 
